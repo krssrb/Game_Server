@@ -69,7 +69,7 @@ void cb_DataInterface_teleporter_updateList(MYSQL *dbCon, diJob_teleporterData *
 			"`type`,`sx`,`sy`,`sz`,`nameId`,`contextId`"
 			") VALUES (%d,%f,%f,%f,%d,%d)", 
 			worldObject->type, worldObject->sx, worldObject->sy,
-			worldObject->sz,worldObject->nameId,worldObject->contextId);
+			worldObject->sz, worldObject->nameId, worldObject->contextId);
 	if( mysql_query(dbCon, queryText) )
 	{
 			//characterData->error = true;

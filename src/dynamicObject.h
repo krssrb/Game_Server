@@ -95,7 +95,6 @@ void dynamicObject_stopPeriodicUpdate(mapChannel_t *mapChannel, dynObject_t *dyn
 #include"banedropship.h"
 #include"humandropship.h"
 #include"waypoint.h"
-#include"wormhole.h"
 #include"controlpoint.h"
 #include"logosObject.h"
 #include"lootdispenser.h"

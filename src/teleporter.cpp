@@ -29,7 +29,7 @@ void _cb_teleporter_initForMapChannel(void *param, diJob_teleporterData *jobData
 			}
 			else if (teleporterList->type == OBJECTTYPE_BASEWORMHOLE)
 			{
-				dynObject = wormhole_create(mapChannel, teleporterList->sx, teleporterList->sy, teleporterList->sz, 0.0f, teleporterList->id, teleporterList->nameId, teleporterList->contextId);
+				//dynObject = wormhole_create(mapChannel, teleporterList->sx, teleporterList->sy, teleporterList->sz, 0.0f, teleporterList->id, teleporterList->nameId, teleporterList->contextId);
 			}
 			if (!dynObject)
 			{
@@ -47,6 +47,5 @@ void teleporter_initForMapChannel(mapChannel_t *mapChannel)
 {
 	mapChannel->loadState = 0;
 	DataInterface_teleporter_getList(mapChannel->mapInfo->contextId,_cb_teleporter_initForMapChannel, mapChannel);
-	printf("test 1\n");
 	while( mapChannel->loadState == 0 ) Sleep(100);
 }

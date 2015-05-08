@@ -41,13 +41,11 @@ dynObject_t* logos_create(mapChannel_t *mapChannel, float x, float y, float z, s
 
 void logos_initForMapChannel(mapChannel_t *mapChannel)
 {
-	printf("logos1 \n");
 	if( mapChannel->mapInfo->contextId == 1220 )
 	{
 		// concordia wilderness
 		logos_create(mapChannel, 493.1054f, 288.2813f+1.0f, 319.7031f, 7302);
 	}
-	printf("logos2 \n");
 }
 
 void logos_destroy(mapChannel_t *mapChannel, dynObject_t *dynObject)
