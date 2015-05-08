@@ -649,6 +649,7 @@ void mapChannel_processPythonRPC(mapChannelClient_t *cm, uint32 MethodID, uint8 
 		return;
 	case SelectWaypoint: // waypoint selected
 		waypoint_recv_SelectWaypoint(cm, pyString, pyStringLen);
+		wormhole_recv_SelectWormhole(cm, pyString, pyStringLen);
 		return;
 	case RequestLootAllFromCorpse: // player auto-loot full corpse
 		lootdispenser_recv_RequestLootAllFromCorpse(cm, pyString, pyStringLen);

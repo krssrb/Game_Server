@@ -25,11 +25,12 @@ void _cb_teleporter_initForMapChannel(void *param, diJob_teleporterData *jobData
 		{
 			if (teleporterList->type == OBJECTTYPE_WAYPOINT)
 			{
-			dynObject = waypoint_create(mapChannel, teleporterList->sx, teleporterList->sy, teleporterList->sz, 0.0f, teleporterList->id, teleporterList->nameId, teleporterList->contextId);
+				dynObject = waypoint_create(mapChannel, teleporterList->sx, teleporterList->sy, teleporterList->sz, 0.0f, teleporterList->id, teleporterList->nameId, teleporterList->contextId);
 			}
 			else if (teleporterList->type == OBJECTTYPE_BASEWORMHOLE)
 			{
-				//dynObject = wormhole_create(mapChannel, teleporterList->sx, teleporterList->sy, teleporterList->sz, 0.0f, teleporterList->id, teleporterList->nameId, teleporterList->contextId);
+				dynObject = wormhole_create(mapChannel, teleporterList->sx, teleporterList->sy, teleporterList->sz, 0.0f, teleporterList->id, teleporterList->nameId, teleporterList->contextId);
+				printf("wormhole created \n");
 			}
 			if (!dynObject)
 			{
