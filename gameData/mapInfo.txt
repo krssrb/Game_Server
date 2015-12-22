@@ -1,20 +1,20 @@
 #(contextId, 'mapName', version, baseRegionId)  
 #Foreas
-(1985, 'adv_bootcamp', 783, 4) #Planet Foreas - Bootcamp -225,102,-67
+#(1985, 'adv_bootcamp', 783, 4) #Planet Foreas - Bootcamp -225,102,-67
 ##Foreas Concordia
 ###Foreas Concordia Divide
-(1148, 'adv_foreas_concordia_divide', 1584, 10) #Planet Foreas: Concordia - Divide -42,117,489 (Foreas Base)
-(1347, 'adv_foreas_concordia_divide_minoscaverns', 293, 4) #Planet Foreas: Concordia - Divide (Minos Caverns) -3,30,100
-(1348, 'adv_foreas_concordia_divide_timoramines', 288, 3) #Planet Foreas: Concordia - Divide (Timora Mines) -153,202,453
-(1349, 'adv_foreas_concordia_divide_torcastraprison', 468, 3) #Planet Foreas: Concordia - Divide (Torcastra Prison) -237,10,313
-(1806, 'adv_foreas_concordia_divide_purgasstation2', 298, 0) #Planet Foreas: Concordia - Divide (Purgas Station) 88,66,205
+#(1148, 'adv_foreas_concordia_divide', 1584, 10) #Planet Foreas: Concordia - Divide -42,117,489 (Foreas Base)
+#(1347, 'adv_foreas_concordia_divide_minoscaverns', 293, 4) #Planet Foreas: Concordia - Divide (Minos Caverns) -3,30,100
+#(1348, 'adv_foreas_concordia_divide_timoramines', 288, 3) #Planet Foreas: Concordia - Divide (Timora Mines) -153,202,453
+#(1349, 'adv_foreas_concordia_divide_torcastraprison', 468, 3) #Planet Foreas: Concordia - Divide (Torcastra Prison) -237,10,313
+#(1806, 'adv_foreas_concordia_divide_purgasstation2', 298, 0) #Planet Foreas: Concordia - Divide (Purgas Station) 88,66,205
 ###Foreas Concordia Wilderness
 (1220, 'adv_foreas_concordia_wilderness', 1556, 0) #Concordia Wilderness - 791,295,383
-(1721, 'adv_foreas_concordia_wilderness_clrf', 290, 0) #Planet Foreas: Concordia - Wilderness (Crater Lake Research Facility) 32,141,158
-(1416, 'adv_foreas_concordia_wilderness_guardianprom', 232, 0) #Planet Foreas: Concordia - Wilderness (Guardian Prominence) 152,-222,190
-(1430, 'adv_foreas_concordia_wilderness_pravusresearch', 555, 0) #Planet Foreas: Concordia - Wilderness (Pravus Research) -214,7,-140
-(1506, 'adv_foreas_concordia_wilderness_cavesofdonn02', 535, 8) #Planet Foreas: Concordia - Wilderness (Caves of Donn) -276,25,-362
-(2368, 'adv_foreas_concordia_wilderness_cavesofdonn_epic', 13, 8) #adv_foreas_concordia_wilderness_cavesofdonn_epic (Epic Caves of Donn) -276,25,-362
+#(1721, 'adv_foreas_concordia_wilderness_clrf', 290, 0) #Planet Foreas: Concordia - Wilderness (Crater Lake Research Facility) 32,141,158
+#(1416, 'adv_foreas_concordia_wilderness_guardianprom', 232, 0) #Planet Foreas: Concordia - Wilderness (Guardian Prominence) 152,-222,190
+#(1430, 'adv_foreas_concordia_wilderness_pravusresearch', 555, 0) #Planet Foreas: Concordia - Wilderness (Pravus Research) -214,7,-140
+#(1506, 'adv_foreas_concordia_wilderness_cavesofdonn02', 535, 8) #Planet Foreas: Concordia - Wilderness (Caves of Donn) -276,25,-362
+#(2368, 'adv_foreas_concordia_wilderness_cavesofdonn_epic', 13, 8) #adv_foreas_concordia_wilderness_cavesofdonn_epic (Epic Caves of Donn) -276,25,-362
 ###Foreas Concordia Palisades
 (1244, 'adv_foreas_concordia_palisades', 1016, 0) #Planet Foreas: Concordia - Palisades (Cumbria Research Facility) -766,140,654 
 #(1384, 'adv_foreas_concordia_palisades_warnetcaverns', 203, 0) #Planet Foreas: Concordia - Palisades (Warnet Caverns) -120,100,45
