@@ -7,6 +7,7 @@ typedef struct
 	uint32 logosClassId; // logos entity classId
 	uint8 state;
 	bool alreadyInUse;
+	bool belongsToBane;
 	sint64 userEntityId;
 	//std::vector<logosTriggerCheck_t> triggeredPlayers;
 	//uint32 updateCounter; // used to detect if players leave the logos
@@ -69,53 +70,10 @@ void logos_disappearForPlayers(mapChannel_t *mapChannel, dynObject_t *dynObject,
 	// called before the object is removed from player sight
 }
 
-
-void logos_useObject(mapChannel_t *mapChannel, dynObject_t *dynObject, mapChannelClient_t* client, sint32 actionID, sint32 actionArg)
-{
-	pyMarshalString_t pms;
-	printf("logos use callback\n");
-	// called whenever any client sends a UseRequest
-	logos_t* objData = (logos_t*)dynObject->objectData;
-	if( objData->alreadyInUse )
-	{
-		// tell client that use action failed
-		// todo
-		return;
-	}
-	// 1) send force state to make sure every client has the same state
-	pym_init(&pms);
-	pym_tuple_begin(&pms);
-	pym_addInt(&pms, USE_ID_STATE_ACTIVE);
-	pym_addInt(&pms, 10000);
-	pym_tuple_end(&pms);
-	netMgr_pythonAddMethodCallRaw(client->cgm, client->player->actionEntityId, 454, pym_getData(&pms), pym_getLen(&pms));
-	// 2) send use
-	pym_init(&pms);
-	pym_tuple_begin(&pms);
-	pym_addInt(&pms, client->player->actor->entityId); // actorID
-	//pym_addInt(&pms, (!objData->belongsToBane)?179:176); // next state id (animation transition)
-	pym_addInt(&pms, USE_ID_STATE_ACTIVE); // next state id (animation transition) 
-	pym_addInt(&pms, 10000); // windupTime
-	// possible additional args
-	pym_tuple_end(&pms);
-	netMgr_pythonAddMethodCallRaw(client->cgm, dynObject->entityId, Use, pym_getData(&pms), pym_getLen(&pms));
-	//// change CP state - ForceState
-	//pym_init(&pms);
-	//pym_tuple_begin(&pms);
-	//pym_addInt(&pms, 174); // 180
-	//pym_addInt(&pms, 10000);
-	//pym_tuple_end(&pms);
-	//netMgr_pythonAddMethodCallRaw(client->cgm, dynObject->entityId, 454, pym_getData(&pms), pym_getLen(&pms));
-	// update object
-	objData->alreadyInUse = true;
-	objData->userEntityId = client->player->actor->entityId;
-	dynamicObject_setPeriodicUpdate(mapChannel, dynObject, 1, 10000);
-}
-
 void logos_interruptUse(mapChannel_t *mapChannel, dynObject_t *dynObject, mapChannelClient_t* client, sint32 actionID, sint32 actionArg)
 {
 	logos_t* objData = (logos_t*)dynObject->objectData;
-	if( objData->alreadyInUse == false )
+	if (objData->alreadyInUse == false)
 		return; // not in use, wat?
 	// mark as not used
 	objData->alreadyInUse = false;
@@ -127,7 +85,50 @@ void logos_interruptUse(mapChannel_t *mapChannel, dynObject_t *dynObject, mapCha
 	pym_addInt(&pms, USE_ID_STATE_ACTIVE);
 	pym_addInt(&pms, 10000);
 	pym_tuple_end(&pms);
-	netMgr_pythonAddMethodCallRaw(client->cgm, client->player->actionEntityId, 454, pym_getData(&pms), pym_getLen(&pms));
+	netMgr_pythonAddMethodCallRaw(client->cgm, client->player->actionEntityId, ForceState, pym_getData(&pms), pym_getLen(&pms));
+}
+
+void logos_useObject(mapChannel_t *mapChannel, dynObject_t *dynObject, mapChannelClient_t* client, sint32 actionID, sint32 actionArg)
+{
+	pyMarshalString_t pms;
+	printf("logos use callback\n");
+	// called whenever any client sends a UseRequest
+	logos_t* objData = (logos_t*)dynObject->objectData;
+	if( objData->alreadyInUse )
+	{
+		printf("logos_useObject test1\n");
+		logos_interruptUse(mapChannel, dynObject, client, actionID, actionArg);
+		printf("logos_useObject test 2\n");
+		return;
+	}
+	// 1) send force state to make sure every client has the same state
+	pym_init(&pms);
+	pym_tuple_begin(&pms);
+	pym_addInt(&pms, USE_ID_STATE_ACTIVE);
+	pym_addInt(&pms, 10000);
+	pym_tuple_end(&pms);
+	netMgr_pythonAddMethodCallRaw(client->cgm, client->player->actionEntityId, ForceState, pym_getData(&pms), pym_getLen(&pms));
+	// 2) send use
+	pym_init(&pms);
+	pym_tuple_begin(&pms);
+	pym_addInt(&pms, client->player->actor->entityId); // actorID
+	pym_addInt(&pms, (!objData->belongsToBane)?179:176); // next state id (animation transition)
+	pym_addInt(&pms, USE_ID_STATE_ACTIVE); // next state id (animation transition) 
+	pym_addInt(&pms, 10000); // windupTime
+	// possible additional args
+	pym_tuple_end(&pms);
+	netMgr_pythonAddMethodCallRaw(client->cgm, dynObject->entityId, Use, pym_getData(&pms), pym_getLen(&pms));
+	//// change CP state - ForceState
+	//pym_init(&pms);
+	//pym_tuple_begin(&pms);
+	//pym_addInt(&pms, 174); // 180
+	//pym_addInt(&pms, 10000);
+	//pym_tuple_end(&pms);
+	//netMgr_pythonAddMethodCallRaw(client->cgm, dynObject->entityId, ForceState, pym_getData(&pms), pym_getLen(&pms));
+	// update object
+	objData->alreadyInUse = true;
+	objData->userEntityId = client->player->actor->entityId;
+	dynamicObject_setPeriodicUpdate(mapChannel, dynObject, 1, 10000);
 }
 
 bool logos_periodicCallback(mapChannel_t *mapChannel, dynObject_t *dynObject, uint8 timerID, sint32 timePassed)

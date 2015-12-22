@@ -23,7 +23,7 @@ void missile_launch(mapChannel_t *mapChannel, actor_t *origin, unsigned long lon
 		void *entity = entityMgr_get(targetEntityId);
 		if( entity == NULL )
 		{
-			printf("the missile target doesnt exist: %u\n", targetEntityId);
+			printf("the missile target doesnt exist: %I64u\n", targetEntityId);
 			// entity does not exist
 			return;
 		}

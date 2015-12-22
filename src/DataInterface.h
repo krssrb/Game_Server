@@ -211,7 +211,7 @@ typedef struct
 	sint8 name[70];
 	sint32 nameId;
 	sint32 classId;
-	sint16 faction;
+	sint32 faction;
 	float walkspeed;
 	float runspeed;
 	sint32 hitpoints;
@@ -245,7 +245,7 @@ typedef struct
 {
 	sint32 id;
 	sint32 mode; // 0 -> automatic spawn, 1 -> base/outpost(CP) spawn, 2 -> scripted spawn (must be triggered)
-	sint8 animType; // 0 -> no animation, 1 -> bane dropship
+	sint32 animType; // 0 -> no animation, 1 -> bane dropship
 	sint32 respawnTime; // only for automatic spawn, how long it takes to respawn creatures after all are killed
 	float posX;
 	float posY;

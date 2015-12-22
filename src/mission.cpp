@@ -63,7 +63,7 @@ bool mission_commandRequiresStorage(uint16 command)
 
 void mission_generateMissionFromScriptLines(sint32 missionId, sint32 startIndex, sint32 lineCount)
 {
-	printf("Prepare mission %d Script-Start: %d Script-Length: %d\n", missionId, startIndex, lineCount);
+	printf("Prepare mission %d \nScript-Start: %d \nScript-Length: %d\n", missionId, startIndex, lineCount);
 	// do some validation
 	if( missionEnv.missionScriptLines[startIndex].state != 0 )
 	{
