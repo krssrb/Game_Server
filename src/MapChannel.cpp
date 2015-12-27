@@ -467,7 +467,7 @@ void mapChannel_recv_LogoutRequest(mapChannelClient_t *cm, uint8 *pyString, sint
 	pym_addInt(&pms, 0*1000); // milliseconds
 	pym_tuple_end(&pms);
 	netMgr_pythonAddMethodCallRaw(cm->cgm, 5, LogoutTimeRemaining, pym_getData(&pms), pym_getLen(&pms));
-	cm->logoutRequestedLast = GetTickCount();
+	cm->logoutRequestedLast = GetTickCount64();
 	cm->logoutActive = true;
 }
 

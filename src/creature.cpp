@@ -139,8 +139,8 @@ void creature_setLocation(creature_t *creature, float x, float y, float z, float
 	//allocate pathnodes
 	creature->pathnodes = (baseBehavior_baseNode*) malloc(sizeof(baseBehavior_baseNode));
 	memset(creature->pathnodes, 0x00, sizeof(baseBehavior_baseNode));
-	creature->lastattack = GetTickCount();
-	creature->lastresttime = GetTickCount();
+	creature->lastattack = GetTickCount64();
+	creature->lastresttime = GetTickCount64();
 }
 
 /* update function*/
