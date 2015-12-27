@@ -233,6 +233,8 @@ void _cb_mapChannel_addNewPlayer(void *param, diJob_characterData_t *jobData)
 	mapChannel_t *mapChannel = mc->mapChannel;
 	// save character data
 	mc->tempCharacterData = (di_characterData_t*)malloc(sizeof(di_characterData_t));
+	if (!mc->tempCharacterData)
+		return;
 	memcpy(mc->tempCharacterData, jobData->outCharacterData, sizeof(di_characterData_t));
 	// save seperate mission data (if any)
 	if( mc->tempCharacterData->missionStateCount )
@@ -255,6 +257,8 @@ void _cb_mapChannel_addNewPlayer(void *param, diJob_characterData_t *jobData)
 void mapChannel_addNewPlayer(mapChannel_t *mapChannel, clientGamemain_t *cgm)
 {
 	mapChannelClient_t *mc = (mapChannelClient_t*)malloc(sizeof(mapChannelClient_t));
+	if (!mc)
+		return;
 	memset((void*)mc, 0x00, sizeof(mapChannelClient_t));
 	mc->cgm = cgm;
 	mc->clientEntityId = entityMgr_getFreeEntityIdForClient(); // generate a entityId for the client instance
@@ -315,6 +319,8 @@ void mapChannel_removePlayer(mapChannelClient_t *client)
 void mapChannel_registerTimer(mapChannel_t *mapChannel, sint32 period, void *param, bool (*cb)(mapChannel_t *mapChannel, void *param, sint32 timePassed))
 {
 	mapChannelTimer_t *timer = (mapChannelTimer_t*)malloc(sizeof(mapChannelTimer_t));
+	if (!timer)
+		return;
 	timer->period = period;
 	timer->timeLeft = period;
 	timer->param = param;
@@ -437,6 +443,8 @@ bool CheckTempCharacter(di_characterData_t *tcd)
 {
    bool valid = true;   
    if(tcd == NULL) valid = false;
+   if (!tcd)
+	   return false;
    if(tcd->missionStateData == NULL) valid = false;
    return valid;
 }
@@ -3936,7 +3944,11 @@ sint32 mapChannel_worker(mapChannelList_t *channelList)
 void mapChannel_start(sint32 *contextIdList, sint32 contextCount)
 {
 	mapChannelList_t *mapList = (mapChannelList_t*)malloc(sizeof(mapChannelList_t));
+	if (!mapList)
+		return;
 	mapList->mapChannelArray = (mapChannel_t*)malloc(sizeof(mapChannel_t)*contextCount);
+	if (!mapList->mapChannelArray)
+		return;
 	mapList->mapChannelCount = 0;
 	RtlZeroMemory(mapList->mapChannelArray, sizeof(mapChannel_t)*contextCount);
 	for(sint32 i=0; i<contextCount; i++)

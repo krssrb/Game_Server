@@ -27,6 +27,8 @@ void cb_DataInterface_Item_getItemTemplates(MYSQL *dbCon, diJob_itemTemplate_t *
 		job->itemTemplateList = (diJob_itemTemplateEntry_t*)malloc(job->numberOfItemTemplates * sizeof(diJob_itemTemplateEntry_t));
 		memset(job->itemTemplateList, 0, job->numberOfItemTemplates * sizeof(diJob_itemTemplateEntry_t));
 	}
+	if (!job->itemTemplateList)
+		return;
 	// parse rows
 	sint32 i = 0;
 	while((dbRow = mysql_fetch_row(dbResult)))
@@ -139,6 +141,8 @@ void cb_DataInterface_Item_getEquipmentData(MYSQL *dbCon, diJob_itemTemplateEqui
 		job->itemTemplateEquipmentList = (diJob_itemTemplateEquipmentEntry_t*)malloc(job->numberOfTemplates * sizeof(diJob_itemTemplateEquipmentEntry_t));
 		memset(job->itemTemplateEquipmentList, 0, job->numberOfTemplates * sizeof(diJob_itemTemplateEquipmentEntry_t));
 	}
+	if (!job->itemTemplateEquipmentList)
+		return;
 	// parse rows
 	sint32 i = 0;
 	while((dbRow = mysql_fetch_row(dbResult)))
@@ -219,6 +223,8 @@ void cb_DataInterface_Item_getArmorData(MYSQL *dbCon, diJob_itemTemplateArmor_t 
 		job->itemTemplateArmorList = (diJob_itemTemplateArmorEntry_t*)malloc(job->numberOfTemplates * sizeof(diJob_itemTemplateArmorEntry_t));
 		memset(job->itemTemplateArmorList, 0, job->numberOfTemplates * sizeof(diJob_itemTemplateArmorEntry_t));
 	}
+	if (!job->itemTemplateArmorList)
+		return;
 	// parse rows
 	sint32 i = 0;
 	while((dbRow = mysql_fetch_row(dbResult)))

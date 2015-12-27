@@ -55,6 +55,8 @@ dynObject_t *_dynamicObject_create(uint32 classId, dynObjectType_t* objectType)
 		return NULL;
 	}
 	dynObject_t *dynObject = (dynObject_t*)malloc(sizeof(dynObject_t));
+	if (!dynObject)
+		return 0;
 	dynObject->entityId = entityMgr_getFreeEntityIdForObject();
 	dynObject->type = objectType;	
 
@@ -120,6 +122,8 @@ void dynamicObject_setPeriodicUpdate(mapChannel_t *mapChannel, dynObject_t *dyna
 {
 	// create work entry
 	dynObject_workEntry_t *workEntry = (dynObject_workEntry_t*)malloc(sizeof(dynObject_workEntry_t));
+	if (!workEntry)
+		return;
 	workEntry->object = dynamicObject;
 	workEntry->period = periodInMS;
 	workEntry->timeLeft = periodInMS;

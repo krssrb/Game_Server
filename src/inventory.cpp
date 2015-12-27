@@ -235,6 +235,8 @@ item_t *item_create(itemTemplate_t *itemTemplate, sint32 stacksize)
 	if (itemTemplate == NULL)
 		return NULL; // "no-template items" must not exist
 	item_t *item = (item_t*)malloc(sizeof(item_t));
+	if (!item)
+		return 0;
 	RtlZeroMemory(item, sizeof(item_t));
 	item->entityId = entityMgr_getFreeEntityIdForItem();
 	item->itemTemplate = itemTemplate;

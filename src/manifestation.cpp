@@ -247,8 +247,12 @@ void manifestation_updateStatsValues(mapChannelClient_t *client, bool fullreset)
 void manifestation_createPlayerCharacter(mapChannel_t *mapChannel, mapChannelClient_t *owner, di_characterData_t *characterData)
 {
 	manifestation_t *manifestation = (manifestation_t*)malloc(sizeof(manifestation_t));
+	if (!manifestation)
+		return;
 	memset(manifestation, 0x00, sizeof(manifestation_t));
 	manifestation->actor = (actor_t*)malloc(sizeof(actor_t));
+	if (!manifestation->actor)
+		return;
 	memset(manifestation->actor, 0x00, sizeof(actor_t));
 	for(sint32 i=0; i<SWAPSET_SIZE; i++)
 	{

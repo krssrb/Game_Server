@@ -35,7 +35,9 @@ dynObject_t* wormhole_create(mapChannel_t *mapChannel, float x, float y, float z
 	dynObject->stateId = 0;
 	dynamicObject_setPosition(dynObject, x, y, z);
 	// setup wormhole specific data
-	wormhole_t* objData = (wormhole_t*)malloc(sizeof(wormhole_t));
+	wormhole_t *objData = (wormhole_t*)malloc(sizeof(wormhole_t));
+	if (!objData)
+		return 0;
 	memset(objData, 0x00, sizeof(wormhole_t));
 	new(objData) wormhole_t();
 	objData->wormholeID = wormholeID;

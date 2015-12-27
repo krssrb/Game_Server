@@ -49,7 +49,9 @@ void Thread::InitMutex(TMutex* Mutex)			{ pthread_mutex_init(Mutex, NULL); }
 	bool Thread::Cancel(thread_id id)
 	{
 		HANDLE handle = OpenThread(THREAD_TERMINATE, false, id);
-		if (TerminateThread(handle, 0) == 0) { return false; }
+		if (TerminateThread(handle, 0) == 0) {
+			return false;
+		}
 		return true;
 	}
 

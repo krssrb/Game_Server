@@ -103,6 +103,8 @@ void cb_DataInterface_Character_getCharacterPreviewInfo(MYSQL *dbCon, diJob_getC
 		sscanf(dbRow[10], "%lf", &char_posZ);
 		char_rawSlotIndex = char_slotIndex - 1;
 		job->outPreviewData[char_rawSlotIndex] = (di_characterPreview_t *)malloc(sizeof(di_characterPreview_t));
+		if (!job->outPreviewData[char_rawSlotIndex])
+			return;
 		sint32 rIdx = 11;
 		for (sint32 i = 0; i < 21; i++)
 		{
@@ -240,6 +242,8 @@ void cb_DataInterface_Character_getCharacterData(MYSQL *dbCon, diJob_characterDa
 			sscanf(dbRow[10], "%lf", &char_posZ);
 			char_rawSlotIndex = char_slotIndex - 1;
 			job->outCharacterData = (di_characterData_t*)malloc(sizeof(di_characterData_t));
+			if (!job->outCharacterData)
+				return;
 			sint32 rIdx = 11;
 			for (sint32 i = 0; i < 21; i++)
 			{
@@ -284,6 +288,8 @@ void cb_DataInterface_Character_getCharacterData(MYSQL *dbCon, diJob_characterDa
 		mysql_free_result(dbResult);
 	}
 
+	if (!job->outCharacterData)
+		return;
 	// get skills
 	sprintf(queryText, "SELECT * FROM skills WHERE characterID=%I64u LIMIT 1", job->outCharacterData->characterID);
 

@@ -52,7 +52,9 @@ dynObject_t* lootdispenser_create(mapChannel_t *mapChannel, creature_t* creature
 	dynObject->stateId = 0;
 	dynamicObject_setPosition(dynObject, creature->actor.posX, creature->actor.posY, creature->actor.posZ);
 	// setup lootdispenser specific data
-	lootdispenser_t* objData = (lootdispenser_t*)malloc(sizeof(lootdispenser_t));
+	lootdispenser_t *objData = (lootdispenser_t*)malloc(sizeof(lootdispenser_t));
+	if (!objData)
+		return 0;
 	memset(objData, 0x00, sizeof(lootdispenser_t));
 	new(objData) lootdispenser_t();
 	objData->attachedToEnityId = creature->actor.entityId;

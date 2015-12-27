@@ -206,6 +206,8 @@ void _communicator_addClientToChannel(mapChannelClient_t *client, uint32 cHash)
 	if (chatChannel)
 	{
 		chatChannel_playerLink_t *newLink = (chatChannel_playerLink_t*)malloc(sizeof(chatChannel_playerLink_t));
+		if (!newLink)
+			return;
 		newLink->next = NULL;
 		newLink->entityId = client->clientEntityId;
 		newLink->previous = NULL;
@@ -245,6 +247,8 @@ void communicator_joinDefaultLocalChannel(mapChannelClient_t *client, sint32 cha
 	{
 		// channel does not exist, create it
 		chatChannel = (chatChannel_t*)malloc(sizeof(chatChannel_t));
+		if (!chatChannel)
+			return;
 		chatChannel->name[0] = '\0';
 		chatChannel->sint32anceId = 0;
 		chatChannel->channelId = channelId;

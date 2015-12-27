@@ -347,7 +347,7 @@ sint32 charMgr_recv_requestCreateCharacterInSlot(clientGamemain_t *cgm, uint8 *p
 	// check name for valid letters
 	bool validName = true;
 	sint32 nameLength = strlen((char*)characterData->unicodeName);
-	for(sint32 i=0; i<127; i++)
+	for(sint32 i=0; i<64; i++)
 	{
 		sint8 c = characterData->unicodeName[i];
 		if( !c )

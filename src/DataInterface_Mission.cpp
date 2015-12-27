@@ -28,6 +28,9 @@ void cb_DataInterface_Mission_getMissionList(MYSQL *dbCon, diJob_missionListData
 	while((dbRow = mysql_fetch_row(dbResult)))
 	{
 		di_missionData_t *missionData = missionDataList+idx;
+		if (!missionData)
+			return;
+
 		idx++;
 
 		uint32 mission_id;
@@ -83,6 +86,8 @@ void cb_DataInterface_Mission_getMissionScriptData(MYSQL *dbCon, di_missionScrip
 	while((dbRow = mysql_fetch_row(dbResult)))
 	{
 		di_missionScriptLine_t *missionScriptLine = missionDataList+idx;
+		if (!missionScriptLine)
+			return;
 		idx++;
 		missionScriptLine->id = atoi(dbRow[0]);
 		missionScriptLine->missionId = atoi(dbRow[1]);

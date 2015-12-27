@@ -27,6 +27,8 @@ mapCell_t* cellMgr_getCell(mapChannel_t *mapChannel, sint32 x, sint32 z)
 			// enlarge buffer
 			sint32 newLimit = mapChannel->mapCellInfo.loadedCellLimit * 2;
 			mapCell_t **newLoadedCellList = (mapCell_t**)malloc(sizeof(mapCell_t*) * newLimit);
+			if (!newLoadedCellList)
+				return 0;
 			for(sint32 i=0; i<mapChannel->mapCellInfo.loadedCellLimit; i++)
 				newLoadedCellList[i] = mapChannel->mapCellInfo.loadedCellList[i];
 			free(mapChannel->mapCellInfo.loadedCellList);

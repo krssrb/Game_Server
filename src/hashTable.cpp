@@ -8,8 +8,14 @@ void hashTable_init(hashTable_t *hashTable, sint32 itemLimit)
 	hashTable->size = itemLimit;
 	hashTable->count = 0;
 	hashTable->entrys = (_HashTable_uint32Iterable_entry_t*)malloc(sizeof(_HashTable_uint32Iterable_entry_t)*itemLimit);
+	if (!hashTable->entrys)
+		return;
 	hashTable->itemKeyArray = (uint32*)malloc(sizeof(uint32)*itemLimit);
+	if (!hashTable->itemKeyArray)
+		return;
 	hashTable->itemValueArray = (void**)malloc(sizeof(void*)*itemLimit);
+	if (!hashTable->itemValueArray)
+		return;
 	// reset all items
 	for(sint32 i=0; i<itemLimit; i++)
 	{

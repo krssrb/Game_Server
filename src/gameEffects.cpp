@@ -71,6 +71,8 @@ void gameEffect_attachSprint(mapChannel_t *mapChannel, actor_t *actor, sint32 ef
 	// level -> The sub id of the effect, some effects have multiple levels (especially the ones linked with player abilities)
 	// create effect struct
 	gameEffect_t *gameEffect = (gameEffect_t*)malloc(sizeof(gameEffect_t));
+	if (!gameEffect)
+		return;
 	// setup struct
 	gameEffect->aliveTime = duration; // 5 seconds (test)
 	gameEffect->time = 0; // reset timer

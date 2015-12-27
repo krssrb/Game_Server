@@ -19,7 +19,9 @@ void _cb_vendor_init(void *param, diJob_vendorListData_t *jobData)
 			break;
 		}
 		// allocate and init vendor data
-		vendorData_t* vendor = (vendorData_t*)malloc(sizeof(vendorData_t));
+		vendorData_t *vendor = (vendorData_t*)malloc(sizeof(vendorData_t));
+		if (!vendor)
+			return;
 		memset(vendor, 0x00, sizeof(vendorData_t));
 		creatureType->vendorData = vendor;
 		// set vendor data
@@ -30,6 +32,8 @@ void _cb_vendor_init(void *param, diJob_vendorListData_t *jobData)
 			// todo: Replace the item list with a vector
 			vendor->numberOfSoldItems = vendorData->numberOfItems;
 			vendor->soldItemList = (vendorItemEntry_t*)malloc(sizeof(vendorItemEntry_t) * vendor->numberOfSoldItems);
+			if (!vendor->soldItemList)
+				return;
 			memset(vendor->soldItemList, 0x00, sizeof(vendorItemEntry_t) * vendor->numberOfSoldItems);
 			for(sint32 i=0; i<vendorData->numberOfItems; i++)
 			{

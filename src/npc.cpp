@@ -840,7 +840,9 @@ void _cb_npc_init(void *param, diJob_npcListData_t *jobData)
 			break;
 		}
 		// allocate and init npc data
-		npcData_t* npc = (npcData_t*)malloc(sizeof(npcData_t));
+		npcData_t *npc = (npcData_t*)malloc(sizeof(npcData_t));
+		if (!npc)
+			return;
 		memset(npc, 0x00, sizeof(npcData_t));
 		creatureType->npcData = npc;
 		// set appearance info (maybe move appearance data into actor table?)

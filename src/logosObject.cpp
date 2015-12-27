@@ -25,7 +25,9 @@ dynObject_t* logos_create(mapChannel_t *mapChannel, float x, float y, float z, s
 	dynObject->stateId = 0;
 	dynamicObject_setPosition(dynObject, x, y, z);
 	// setup logos specific data
-	logos_t* objData = (logos_t*)malloc(sizeof(logos_t));
+	logos_t *objData = (logos_t*)malloc(sizeof(logos_t));
+	if (!objData)
+		return 0;
 	memset(objData, 0x00, sizeof(logos_t));
 	new(objData) logos_t();
 	objData->logosClassId = logosClassId;

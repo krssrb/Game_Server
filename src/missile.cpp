@@ -452,11 +452,12 @@ void missile_ActionHandler_Lighting(mapChannel_t *mapChannel, missile_t *missile
 	pyMarshalString_t pms;
 	sint32 targetType = 0;
 	void *entity = NULL;
-	if( missile->targetActor )
-	{
+	if (missile->targetActor) {
 		targetType = entityMgr_getEntityType(missile->targetEntityId);
 		entity = entityMgr_get(missile->targetEntityId);
 	}
+	else
+		return;
 	sint32 damage = missile->damageA;
 	/* Execute action */
 	pym_init(&pms);

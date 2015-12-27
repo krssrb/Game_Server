@@ -45,6 +45,8 @@ void cb_DataInterface_NPC_getNPCList(MYSQL *dbCon, diJob_npcListData_t *job, voi
 	// allocate npc data
 	sint32 npcCount = (sint32)mysql_num_rows(dbResult);
 	di_npcData_t *npcDataList = (di_npcData_t*)malloc(sizeof(di_npcData_t) * npcCount);
+	if (!npcDataList)
+		return;
 	//allocate the spawntypes/pools the same way
 	di_npcData_t* npcData = npcDataList;
 	while((dbRow = mysql_fetch_row(dbResult)))
@@ -104,6 +106,8 @@ void _cb_DataInterface_Vendor_getVendorItemList(MYSQL *dbCon, di_vendorData_t* v
 	// allocate vendor item data
 	sint32 itemCount = (sint32)mysql_num_rows(dbResult);
 	di_vendorItemData_t *vendorItemDataList = (di_vendorItemData_t*)malloc(sizeof(di_vendorItemData_t) * itemCount);
+	if (!vendorItemDataList)
+		return;
 	// parse mysql data
 	di_vendorItemData_t* vendorItemData = vendorItemDataList;
 	while((dbRow = mysql_fetch_row(dbResult)))
@@ -150,6 +154,8 @@ void cb_DataInterface_Vendor_getVendorList(MYSQL *dbCon, diJob_vendorListData_t 
 	// allocate vendor data
 	sint32 vendorCount = (sint32)mysql_num_rows(dbResult);
 	di_vendorData_t *vendorDataList = (di_vendorData_t*)malloc(sizeof(di_vendorData_t) * vendorCount);
+	if (!vendorDataList)
+		return;
 	// parse mysql data
 	di_vendorData_t* vendorData = vendorDataList;
 	while((dbRow = mysql_fetch_row(dbResult)))

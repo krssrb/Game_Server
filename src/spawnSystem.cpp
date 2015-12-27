@@ -231,9 +231,13 @@ void _cb_spawnPool_initForMapChannel(void *param, diJob_spawnpool_t *jobData)
 	if( jobData->contextId != mapChannel->mapInfo->contextId )
 		return; // spawnpool is not for this map
 	spawnPool_t *spawnPool = (spawnPool_t*)malloc(sizeof(spawnPool_t));
+	if (!spawnPool)
+		return;
 	memset(spawnPool, 0x00, sizeof(spawnPool_t));
 	spawnPool->locationCount = 1; // eventually add support for multiple spawn locations
 	spawnPool->locationList = (spawnLocation_t*)malloc(sizeof(spawnLocation_t) * spawnPool->locationCount);
+	if (!spawnPool->locationList)
+		return;
 	spawnPool->locationList[0].x = jobData->posX;
 	spawnPool->locationList[0].y = jobData->posY;
 	spawnPool->locationList[0].z = jobData->posZ;
