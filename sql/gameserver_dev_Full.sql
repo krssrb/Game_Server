@@ -113,7 +113,7 @@ CREATE TABLE `characters` (
   `numLogins` int(11) NOT NULL DEFAULT '0',
   `totalTimePlayed` int(11) NOT NULL DEFAULT '0',
   `timeSinceLastPlayed` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `logos` varbinary(410) NOT NULL,
+  `logos` varbinary(409) NOT NULL,
   `clonecredits` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=70 DEFAULT CHARSET=utf8; -- First 70 slots are left for Admin's, GM's 

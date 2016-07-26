@@ -228,7 +228,7 @@ void cb_DataInterface_Character_getCharacterData(MYSQL *dbCon, diJob_characterDa
 			uint32 char_mind;
 			uint32 char_spirit;
 			uint32 char_clonecredits;
-			char char_logos[410];
+			char char_logos[409];
 			sscanf(dbRow[0], "%I64u", &char_id);
 			sscanf(dbRow[3], "%d", &char_slotIndex);
 			sscanf(dbRow[4], "%d", &char_gender);
