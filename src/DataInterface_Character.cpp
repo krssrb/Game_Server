@@ -60,7 +60,7 @@ void cb_DataInterface_Character_getCharacterPreviewInfo(MYSQL *dbCon, diJob_getC
 			"ad20_classId,ad20_hue,"
 			"ad21_classId,ad21_hue,"
 			"level,numLogins,totalTimePlayed,TIMESTAMPDIFF(MINUTE,timeSinceLastPlayed,NOW()) AS timeSinceLastPlayed,clonecredits,body,mind,spirit,experience"
-			" FROM characters WHERE userId=%I64u AND slotId=%u", job->userId, job->slotIndex);
+			" FROM characters WHERE userId=%I64u AND slotId=%d", job->userId, job->slotIndex);
 	}
 
 	// execute query
@@ -103,8 +103,6 @@ void cb_DataInterface_Character_getCharacterPreviewInfo(MYSQL *dbCon, diJob_getC
 		sscanf(dbRow[10], "%lf", &char_posZ);
 		char_rawSlotIndex = char_slotIndex - 1;
 		job->outPreviewData[char_rawSlotIndex] = (di_characterPreview_t *)malloc(sizeof(di_characterPreview_t));
-		if (!job->outPreviewData[char_rawSlotIndex])
-			return;
 		sint32 rIdx = 11;
 		for (sint32 i = 0; i < 21; i++)
 		{
@@ -195,7 +193,7 @@ void cb_DataInterface_Character_getCharacterData(MYSQL *dbCon, diJob_characterDa
 		"ad21_classId,ad21_hue,"
 		"level,credits,prestige,experience,rotation,body,mind,spirit,logos,clonecredits"
 		" FROM characters"
-		" WHERE userId=%I64u AND slotId=%u LIMIT 1", job->userId, job->slotIndex);
+		" WHERE userId=%I64u AND slotId=%d LIMIT 1", job->userId, job->slotIndex);
 
 	// execute query
 	if (mysql_query(dbCon, queryText))
@@ -242,8 +240,6 @@ void cb_DataInterface_Character_getCharacterData(MYSQL *dbCon, diJob_characterDa
 			sscanf(dbRow[10], "%lf", &char_posZ);
 			char_rawSlotIndex = char_slotIndex - 1;
 			job->outCharacterData = (di_characterData_t*)malloc(sizeof(di_characterData_t));
-			if (!job->outCharacterData)
-				return;
 			sint32 rIdx = 11;
 			for (sint32 i = 0; i < 21; i++)
 			{
@@ -288,8 +284,6 @@ void cb_DataInterface_Character_getCharacterData(MYSQL *dbCon, diJob_characterDa
 		mysql_free_result(dbResult);
 	}
 
-	if (!job->outCharacterData)
-		return;
 	// get skills
 	sprintf(queryText, "SELECT * FROM skills WHERE characterID=%I64u LIMIT 1", job->outCharacterData->characterID);
 
@@ -781,10 +775,10 @@ void cb_DataInterface_Character_updateCharacterSkills(MYSQL *dbCon, diJob_update
 	sprintf(queryText, "UPDATE skills SET ");
 	for (sint32 i = 0; i < 73; i++)
 	{
-		sprintf(queryText, "%s skill%d=%d, ", queryText, i, *(job->level+i));
+		sprintf(queryText, "%s skill%d=%d,", queryText, i, *(job->level+i));
 	}
-	queryText[strlen(queryText) - 2] = '\0';
-	sprintf(queryText, "%s WHERE characterID=%I64u", queryText, job->characterID);
+	queryText[strlen(queryText) - 1] = '\0';
+	sprintf(queryText, "%s WHERE characterID=%I64u;", queryText, job->characterID);
 	// execute query
 	job->error = false;
 	if (mysql_query(dbCon, queryText))

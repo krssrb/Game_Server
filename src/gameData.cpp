@@ -99,7 +99,6 @@ void _gameData_loadMapInfo()
 		{
 			sint32 contextId;
 			sint8 mapName[256];
-			mapName[0] = '\0';
 			sint32 version;
 			sint32 baseRegionId;
 			if( sscanf((char*)line, "(%d, '%[^']', %d, %d)", &contextId, mapName, &version, &baseRegionId) == 4 )
@@ -150,9 +149,7 @@ void _item_loadItemTemplates(void *param, diJob_itemTemplate_t *jobData)
 	printf("Loading %d item templates from db...\n", jobData->numberOfItemTemplates);
 	for(sint32 i=0; i<jobData->numberOfItemTemplates; i++)
 	{
-		itemTemplate_t *itemTemplate = (itemTemplate_t*)malloc(sizeof(itemTemplate_t));
-		if (!itemTemplate)
-			return;
+		itemTemplate_t* itemTemplate = (itemTemplate_t*)malloc(sizeof(itemTemplate_t));
 		memset(itemTemplate, 0x00, sizeof(itemTemplate_t));
 		itemTemplate->item.templateId = jobData->itemTemplateList[i].itemTemplateId;
 		itemTemplate->item.classId = jobData->itemTemplateList[i].classId;

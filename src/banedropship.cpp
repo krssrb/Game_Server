@@ -18,8 +18,6 @@ void banedropship_create(mapChannel_t *mapChannel, float x, float y, float z, si
 	if( !dynObject )
 		return;
 	dynObject_baneDropship_t *banedropShipData = (dynObject_baneDropship_t*)malloc(sizeof(dynObject_baneDropship_t));
-	if( !banedropShipData )
-		return;
 	memset(banedropShipData, 0x00, sizeof(dynObject_baneDropship_t));
 	dynObject->objectData = banedropShipData;
 	dynObject->stateId = 188;

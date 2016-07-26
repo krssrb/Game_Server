@@ -1,3 +1,2 @@
-# Game_Server
-InfiniteRasa_krssrbwork
+# Infinite Rasa - Game Server
 C++ version

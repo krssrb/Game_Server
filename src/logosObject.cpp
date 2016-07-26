@@ -7,7 +7,6 @@ typedef struct
 	uint32 logosClassId; // logos entity classId
 	uint8 state;
 	bool alreadyInUse;
-	bool belongsToBane;
 	sint64 userEntityId;
 	//std::vector<logosTriggerCheck_t> triggeredPlayers;
 	//uint32 updateCounter; // used to detect if players leave the logos
@@ -25,9 +24,7 @@ dynObject_t* logos_create(mapChannel_t *mapChannel, float x, float y, float z, s
 	dynObject->stateId = 0;
 	dynamicObject_setPosition(dynObject, x, y, z);
 	// setup logos specific data
-	logos_t *objData = (logos_t*)malloc(sizeof(logos_t));
-	if (!objData)
-		return 0;
+	logos_t* objData = (logos_t*)malloc(sizeof(logos_t));
 	memset(objData, 0x00, sizeof(logos_t));
 	new(objData) logos_t();
 	objData->logosClassId = logosClassId;
@@ -72,23 +69,6 @@ void logos_disappearForPlayers(mapChannel_t *mapChannel, dynObject_t *dynObject,
 	// called before the object is removed from player sight
 }
 
-void logos_interruptUse(mapChannel_t *mapChannel, dynObject_t *dynObject, mapChannelClient_t* client, sint32 actionID, sint32 actionArg)
-{
-	logos_t* objData = (logos_t*)dynObject->objectData;
-	if (objData->alreadyInUse == false)
-		return; // not in use, wat?
-	// mark as not used
-	objData->alreadyInUse = false;
-	objData->userEntityId = 0;
-	// force state
-	pyMarshalString_t pms;
-	pym_init(&pms);
-	pym_tuple_begin(&pms);
-	pym_addInt(&pms, USE_ID_STATE_ACTIVE);
-	pym_addInt(&pms, 10000);
-	pym_tuple_end(&pms);
-	netMgr_pythonAddMethodCallRaw(client->cgm, client->player->actionEntityId, ForceState, pym_getData(&pms), pym_getLen(&pms));
-}
 
 void logos_useObject(mapChannel_t *mapChannel, dynObject_t *dynObject, mapChannelClient_t* client, sint32 actionID, sint32 actionArg)
 {
@@ -98,9 +78,8 @@ void logos_useObject(mapChannel_t *mapChannel, dynObject_t *dynObject, mapChanne
 	logos_t* objData = (logos_t*)dynObject->objectData;
 	if( objData->alreadyInUse )
 	{
-		printf("logos_useObject test1\n");
-		logos_interruptUse(mapChannel, dynObject, client, actionID, actionArg);
-		printf("logos_useObject test 2\n");
+		// tell client that use action failed
+		// todo
 		return;
 	}
 	// 1) send force state to make sure every client has the same state
@@ -109,12 +88,12 @@ void logos_useObject(mapChannel_t *mapChannel, dynObject_t *dynObject, mapChanne
 	pym_addInt(&pms, USE_ID_STATE_ACTIVE);
 	pym_addInt(&pms, 10000);
 	pym_tuple_end(&pms);
-	netMgr_pythonAddMethodCallRaw(client->cgm, client->player->actionEntityId, ForceState, pym_getData(&pms), pym_getLen(&pms));
+	netMgr_pythonAddMethodCallRaw(client->cgm, client->player->actionEntityId, 454, pym_getData(&pms), pym_getLen(&pms));
 	// 2) send use
 	pym_init(&pms);
 	pym_tuple_begin(&pms);
 	pym_addInt(&pms, client->player->actor->entityId); // actorID
-	pym_addInt(&pms, (!objData->belongsToBane)?179:176); // next state id (animation transition)
+	//pym_addInt(&pms, (!objData->belongsToBane)?179:176); // next state id (animation transition)
 	pym_addInt(&pms, USE_ID_STATE_ACTIVE); // next state id (animation transition) 
 	pym_addInt(&pms, 10000); // windupTime
 	// possible additional args
@@ -126,11 +105,29 @@ void logos_useObject(mapChannel_t *mapChannel, dynObject_t *dynObject, mapChanne
 	//pym_addInt(&pms, 174); // 180
 	//pym_addInt(&pms, 10000);
 	//pym_tuple_end(&pms);
-	//netMgr_pythonAddMethodCallRaw(client->cgm, dynObject->entityId, ForceState, pym_getData(&pms), pym_getLen(&pms));
+	//netMgr_pythonAddMethodCallRaw(client->cgm, dynObject->entityId, 454, pym_getData(&pms), pym_getLen(&pms));
 	// update object
 	objData->alreadyInUse = true;
 	objData->userEntityId = client->player->actor->entityId;
 	dynamicObject_setPeriodicUpdate(mapChannel, dynObject, 1, 10000);
+}
+
+void logos_interruptUse(mapChannel_t *mapChannel, dynObject_t *dynObject, mapChannelClient_t* client, sint32 actionID, sint32 actionArg)
+{
+	logos_t* objData = (logos_t*)dynObject->objectData;
+	if( objData->alreadyInUse == false )
+		return; // not in use, wat?
+	// mark as not used
+	objData->alreadyInUse = false;
+	objData->userEntityId = 0;
+	// force state
+	pyMarshalString_t pms;
+	pym_init(&pms);
+	pym_tuple_begin(&pms);
+	pym_addInt(&pms, USE_ID_STATE_ACTIVE);
+	pym_addInt(&pms, 10000);
+	pym_tuple_end(&pms);
+	netMgr_pythonAddMethodCallRaw(client->cgm, client->player->actionEntityId, 454, pym_getData(&pms), pym_getLen(&pms));
 }
 
 bool logos_periodicCallback(mapChannel_t *mapChannel, dynObject_t *dynObject, uint8 timerID, sint32 timePassed)

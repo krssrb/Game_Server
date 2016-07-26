@@ -206,8 +206,6 @@ void _communicator_addClientToChannel(mapChannelClient_t *client, uint32 cHash)
 	if (chatChannel)
 	{
 		chatChannel_playerLink_t *newLink = (chatChannel_playerLink_t*)malloc(sizeof(chatChannel_playerLink_t));
-		if (!newLink)
-			return;
 		newLink->next = NULL;
 		newLink->entityId = client->clientEntityId;
 		newLink->previous = NULL;
@@ -247,8 +245,6 @@ void communicator_joinDefaultLocalChannel(mapChannelClient_t *client, sint32 cha
 	{
 		// channel does not exist, create it
 		chatChannel = (chatChannel_t*)malloc(sizeof(chatChannel_t));
-		if (!chatChannel)
-			return;
 		chatChannel->name[0] = '\0';
 		chatChannel->sint32anceId = 0;
 		chatChannel->channelId = channelId;
@@ -761,7 +757,7 @@ bool communicator_parseCommand(mapChannelClient_t *cm, sint8 *textMsg)
 		pym_init(&pms);
 		pym_tuple_begin(&pms);
 		pym_tuple_end(&pms);
-		netMgr_pythonAddMethodCallRaw(cm->cgm, 5, DevRQSWindow, pym_getData(&pms), pym_getLen(&pms));
+		netMgr_pythonAddMethodCallRaw(cm->cgm, 5, 831, pym_getData(&pms), pym_getLen(&pms));
 		return true;
 	}
 	if (strcmp(textMsg, ".makemedie") == 0)
@@ -871,24 +867,6 @@ bool communicator_parseCommand(mapChannelClient_t *cm, sint8 *textMsg)
 			return true;
 		}
 	}
-	if (strcmp(textMsg, ".givealllogos") == 0) {
-		for (int i = 1; i < 410; i++) {
-			// skip missing logos
-			if (i == 11 || i == 59 || i == 60 || i == 61 || i == 62 || i == 69 ||
-				i == 120 || i == 154 || i == 181 || i == 189 || i == 213 || i == 222 ||
-				i == 338 || i == 367 || i == 379 || i == 385 || i == 403 || i == 406 || i == 409
-			) continue;
-			cm->tempCharacterData->logos.set(i, true);
-			DataInterface_Character_updateCharacter(cm->tempCharacterData->userID, cm->tempCharacterData->slotIndex, UPDATE_LOGOS, cm->tempCharacterData->logos.to_string().c_str());
-			pym_init(&pms);
-			pym_tuple_begin(&pms);
-			pym_addInt(&pms, i);
-			pym_tuple_end(&pms);
-			netMgr_pythonAddMethodCallRaw(cm->cgm, cm->player->actor->entityId, 475, pym_getData(&pms), pym_getLen(&pms));
-		}
-		communicator_systemMessage(cm, "All Logos added");
-		return true;
-	}
 	if (strcmp(textMsg, ".gm") == 0)
 	{
 		pym_init(&pms);
@@ -961,7 +939,7 @@ bool communicator_parseCommand(mapChannelClient_t *cm, sint8 *textMsg)
 		pym_addInt(&pms, regionId);
 		pym_list_end(&pms);
 		pym_tuple_end(&pms);
-		netMgr_pythonAddMethodCallRaw(cm->cgm, cm->player->actor->entityId, UpdateRegions, pym_getData(&pms), pym_getLen(&pms));
+		netMgr_pythonAddMethodCallRaw(cm->cgm, cm->player->actor->entityId, 568, pym_getData(&pms), pym_getLen(&pms));
 	}
 	//if( memcmp(textMsg, ".name ", 6) == 0 )
 	//{

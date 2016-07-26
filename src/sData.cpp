@@ -8,8 +8,6 @@ sData_t *sData_open(sint8 *path)
 	if( !file )
 		return NULL;
 	sData_t *sData = (sData_t*)malloc(sizeof(sData_t));
-	if (!sData)
-		return 0;
 	sData->file = file;
 	sData->categoryName = NULL;
 	sData->categoryDataOffset = 0; // category data start
@@ -105,14 +103,10 @@ void _sData_preloadCategory(sData_t *sData)
 				// only name set...
 				// cover with empty data string
 				sData->optionLine[lineCount].optionName = (sint8*)malloc(tLen+1);
-				if (!sData->optionLine[lineCount].optionName)
-					return;
 				for(sint32 p=0; p<tLen; p++)
 					sData->optionLine[lineCount].optionName[p] = x[p];
 				sData->optionLine[lineCount].optionName[tLen] = '\0';
 				sData->optionLine[lineCount].optionData = (sint8*)malloc(1);
-				if (!sData->optionLine[lineCount].optionData)
-					return;
 				sData->optionLine[lineCount].optionData[0] = '\0';
 			}
 			else
@@ -172,8 +166,6 @@ bool sData_nextCategory(sData_t *sData)
 			sData->categoryDataOffset = fileMgr_getSeek(sData->file);
 			sint32 catLen = min(1024, strlen((char*)line)+1);
 			sData->categoryName = (sint8*)malloc(catLen);
-			if (!sData->categoryName)
-				return 0;
 			// copy name
 			for(sint32 i=0; i<1023; i++) // 1kb is the name length limit
 			{

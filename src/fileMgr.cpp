@@ -6,8 +6,6 @@ file_t *fileMgr_open(sint8 *name)
 	if( hFile == INVALID_HANDLE_VALUE )
 		return NULL;
 	file_t *file = (file_t*)malloc(sizeof(file_t));
-	if (!file)
-		return 0;
 	file->hFile = hFile;
 	return file;
 }
@@ -18,8 +16,6 @@ file_t *fileMgr_create(sint8 *name)
 	if( hFile == INVALID_HANDLE_VALUE )
 		return NULL;
 	file_t *file = (file_t*)malloc(sizeof(file_t));
-	if (!file)
-		return 0;
 	file->hFile = hFile;
 	return file;
 }
@@ -159,8 +155,6 @@ sint8 *fileMgr_readLine(file_t *file)
 	sint8 *cstr = (sint8*)malloc(512);
 	sint32 size = 0;
 	sint32 limit = 512;
-	if (!cstr)
-		return 0;
 	while( maxLen )
 	{
 		maxLen--;

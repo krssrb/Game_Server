@@ -35,9 +35,7 @@ dynObject_t* wormhole_create(mapChannel_t *mapChannel, float x, float y, float z
 	dynObject->stateId = 0;
 	dynamicObject_setPosition(dynObject, x, y, z);
 	// setup wormhole specific data
-	wormhole_t *objData = (wormhole_t*)malloc(sizeof(wormhole_t));
-	if (!objData)
-		return 0;
+	wormhole_t* objData = (wormhole_t*)malloc(sizeof(wormhole_t));
 	memset(objData, 0x00, sizeof(wormhole_t));
 	new(objData) wormhole_t();
 	objData->wormholeID = wormholeID;
@@ -282,7 +280,7 @@ void wormhole_recv_SelectWormhole(mapChannelClient_t *client, uint8 *pyString, s
 	// todo4: check if destination is on same map or not
 	if (wormholeObject->contextId == mapChannel->mapInfo->contextId)
 	{
-		printf("map chanel id %d, wormhole pos id %d \n", wormholeObject->contextId, mapChannel->mapInfo->contextId);
+		printf("map chanel id %u, wormhole pos id %u \n", wormholeObject->contextId, mapChannel->mapInfo->contextId);
 		wormhole_t* wormholeObjectData = (wormhole_t*)wormholeObject->objectData;
 		wormholeTriggerCheck_t newTriggerCheck = { 0 };
 		newTriggerCheck.entityId = client->clientEntityId;

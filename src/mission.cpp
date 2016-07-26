@@ -63,7 +63,7 @@ bool mission_commandRequiresStorage(uint16 command)
 
 void mission_generateMissionFromScriptLines(sint32 missionId, sint32 startIndex, sint32 lineCount)
 {
-	printf("Prepare mission %d \nScript-Start: %d \nScript-Length: %d\n", missionId, startIndex, lineCount);
+	printf("Prepare mission %d Script-Start: %d Script-Length: %d\n", missionId, startIndex, lineCount);
 	// do some validation
 	if( missionEnv.missionScriptLines[startIndex].state != 0 )
 	{
@@ -95,8 +95,6 @@ void mission_generateMissionFromScriptLines(sint32 missionId, sint32 startIndex,
 	sint32 stateCount = missionEnv.missionScriptLines[startIndex+lineCount-1].state - missionEnv.missionScriptLines[startIndex+0].state + 1;
 	// init mission struct
 	mission_t* mission = (mission_t*)malloc(sizeof(mission_t));
-	if (!mission)
-		return;
 	memset(mission, 0x00, sizeof(mission_t));
 	mission->missionId = missionId;
 	mission->scriptLines = missionEnv.missionScriptLines + startIndex;
@@ -114,8 +112,6 @@ void mission_generateMissionFromScriptLines(sint32 missionId, sint32 startIndex,
 	}
 	// create state mapping
 	mission->stateMapping = (uint16*)malloc(sizeof(uint16) * (stateCount+1));
-	if (!mission->stateMapping)
-		return;
 	sint16 currentState = -1;
 	uint16 stateMapIndex = 0;
 	for(sint32 i=0; i<lineCount; i++)

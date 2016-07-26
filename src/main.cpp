@@ -402,7 +402,7 @@ void SMSG_Q_QUEUEPOSITION(CLIENT_QUEUE *cp, sint32 Position)
 	DWORD		?		00 00 00 00
 	DWORD		?		05 00 00 00  
 	*/
-	uint8 SendBuffer[32] = { NULL };
+	uint8 SendBuffer[32];
 	*(uint32*)(SendBuffer+0) = 9;
 	*(uint8*)(SendBuffer+4) = 0xD;
 	*(uint32*)(SendBuffer+5) = Position;
@@ -420,7 +420,7 @@ void SMSG_Q_HANDOFF(CLIENT_QUEUE *cp)
 	DWORD		LoginID1*	xx xx xx xx
 	DWORD		LoginID2*	xx xx xx xx 
 	*/
-	uint8 SendBuffer[32] = { NULL };
+	uint8 SendBuffer[32];
 	*(uint32*)(SendBuffer+0) = 17;
 	*(uint8*)(SendBuffer+4) = 0xE;
 	*(uint32*)(SendBuffer+5) = DataInterface_getMyIP(); //IP
@@ -507,10 +507,11 @@ void DH_GenerateServerK(BIGNUM *a, BIGNUM *B, BIGNUM *K)
 }
 
 void SMSG_GL_SERVERKEY(CLIENT_GAMELOGIN *cg)
-{	//Build packet
-	uint8 Packet[0x100] = { NULL };
-
+{
 	DH_GeneratePrivateAndPublicA(&cg->a, &cg->A);
+
+	//Build packet
+	uint8 Packet[0x100];
 	
 	*(uint32*)(Packet+0) = 0x8D; //Size
 	*(uint32*)(Packet+4) = 0x40; //LenA

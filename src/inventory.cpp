@@ -235,8 +235,6 @@ item_t *item_create(itemTemplate_t *itemTemplate, sint32 stacksize)
 	if (itemTemplate == NULL)
 		return NULL; // "no-template items" must not exist
 	item_t *item = (item_t*)malloc(sizeof(item_t));
-	if (!item)
-		return 0;
 	RtlZeroMemory(item, sizeof(item_t));
 	item->entityId = entityMgr_getFreeEntityIdForItem();
 	item->itemTemplate = itemTemplate;
@@ -654,8 +652,8 @@ void _cb_item_recv_RequestWeaponReload_actionUpdate(mapChannel_t* mapChannel, ac
 			if (itemAmmo->itemTemplate->item.classId == ammoClassId)
 			{
 				// consume ammo
-				sint32 ammoToGrab = min(item->itemTemplate->weapon.clipSize - foundAmmoAmount, itemAmmo->stacksize);
-				foundAmmoAmount += ammoToGrab;
+				sint32 ammoToGrab = min(item->itemTemplate->weapon.clipSize - foundAmmoAmount - item->weaponData.ammoCount, itemAmmo->stacksize);
+				foundAmmoAmount = ammoToGrab + item->weaponData.ammoCount;
 				inventory_reduceStackCount(client, itemAmmo, ammoToGrab);
 				foundAmmo = true;
 				if (foundAmmoAmount == item->itemTemplate->weapon.clipSize)

@@ -18,8 +18,6 @@ void humandropship_create(mapChannel_t *mapChannel, float x, float y, float z, s
 	if( !dynObject )
 		return;
 	dynObject_humanDropship_t *humandropShipData = (dynObject_humanDropship_t*)malloc(sizeof(dynObject_humanDropship_t));
-	if (!humandropShipData)
-		return;
 	memset(humandropShipData, 0x00, sizeof(dynObject_humanDropship_t));
 	dynObject->objectData = humandropShipData;
 	dynObject->stateId = 188;

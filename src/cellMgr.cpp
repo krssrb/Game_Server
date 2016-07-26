@@ -9,7 +9,7 @@ bool cellMgr_initForMapChannel(mapChannel_t *mapChannel)
 	mapChannel->mapCellInfo.loadedCellCount = 0;
 	mapChannel->mapCellInfo.loadedCellLimit = 2048;
 	mapChannel->mapCellInfo.loadedCellList = (mapCell_t**)malloc(sizeof(mapCell_t*)*mapChannel->mapCellInfo.loadedCellLimit);
-	mapChannel->mapCellInfo.time_updateVisibility = GetTickCount64()+1000;
+	mapChannel->mapCellInfo.time_updateVisibility = GetTickCount()+1000;
 	return true;
 }
 
@@ -27,8 +27,6 @@ mapCell_t* cellMgr_getCell(mapChannel_t *mapChannel, sint32 x, sint32 z)
 			// enlarge buffer
 			sint32 newLimit = mapChannel->mapCellInfo.loadedCellLimit * 2;
 			mapCell_t **newLoadedCellList = (mapCell_t**)malloc(sizeof(mapCell_t*) * newLimit);
-			if (!newLoadedCellList)
-				return 0;
 			for(sint32 i=0; i<mapChannel->mapCellInfo.loadedCellLimit; i++)
 				newLoadedCellList[i] = mapChannel->mapCellInfo.loadedCellList[i];
 			free(mapChannel->mapCellInfo.loadedCellList);
@@ -420,7 +418,7 @@ void cellMgr_updateVisibility( mapChannel_t *mapChannel )
 
 void cellMgr_doWork( mapChannel_t *mapChannel )
 {
-	uint32 currentTime = GetTickCount64();
+	uint32 currentTime = GetTickCount();
 	if( mapChannel->mapCellInfo.time_updateVisibility < currentTime )
 	{
 		cellMgr_updateVisibility(mapChannel);

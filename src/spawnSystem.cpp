@@ -85,7 +85,7 @@ bool _spawnPool_callback(mapChannel_t *mapChannel, void *param, sint32 timePasse
 	if( totalCreaturesActive )
 		return true;
 	// get time
-	uint32 time = GetTickCount64(); // todo: read the time from a global object time variable than via api everytime
+	uint32 time = GetTickCount(); // todo: read the time from a global object time variable than via api everytime
 	// get random spawnpoint
 	sint32 rSpawnLoc = rand()%spawnPool->locationCount;
 	spawnLocation_t *location = spawnPool->locationList+rSpawnLoc;
@@ -180,7 +180,7 @@ void spawnPool_decreaseQueueCount(mapChannel_t *mapChannel, spawnPool_t *spawnPo
 {
 	spawnPool->dropshipQueue--;
 	if( (spawnPool->dropshipQueue + spawnPool->queuedCreatures + spawnPool->aliveCreatures) == 0 )
-		spawnPool->spawnLockTime = GetTickCount64() + spawnPool->respawnTime;
+		spawnPool->spawnLockTime = GetTickCount() + spawnPool->respawnTime;
 }
 
 void spawnPool_increaseAliveCreatureCount(mapChannel_t *mapChannel, spawnPool_t *spawnPool)
@@ -202,7 +202,7 @@ void spawnPool_decreaseAliveCreatureCount(mapChannel_t *mapChannel, spawnPool_t 
 {
 	spawnPool->aliveCreatures--;
 	if( (spawnPool->dropshipQueue + spawnPool->queuedCreatures + spawnPool->aliveCreatures) == 0 )
-		spawnPool->spawnLockTime = GetTickCount64() + spawnPool->respawnTime;
+		spawnPool->spawnLockTime = GetTickCount() + spawnPool->respawnTime;
 }
 
 void spawnPool_decreaseDeadCreatureCount(mapChannel_t *mapChannel, spawnPool_t *spawnPool)
@@ -214,7 +214,7 @@ void spawnPool_decreaseQueuedCreatureCount(mapChannel_t *mapChannel, spawnPool_t
 {
 	spawnPool->queuedCreatures-=count;
 	if( (spawnPool->dropshipQueue + spawnPool->queuedCreatures + spawnPool->aliveCreatures) == 0 )
-		spawnPool->spawnLockTime = GetTickCount64() + spawnPool->respawnTime;
+		spawnPool->spawnLockTime = GetTickCount() + spawnPool->respawnTime;
 }
 
 //###################################### init spawnpool #####################################
@@ -231,13 +231,9 @@ void _cb_spawnPool_initForMapChannel(void *param, diJob_spawnpool_t *jobData)
 	if( jobData->contextId != mapChannel->mapInfo->contextId )
 		return; // spawnpool is not for this map
 	spawnPool_t *spawnPool = (spawnPool_t*)malloc(sizeof(spawnPool_t));
-	if (!spawnPool)
-		return;
 	memset(spawnPool, 0x00, sizeof(spawnPool_t));
 	spawnPool->locationCount = 1; // eventually add support for multiple spawn locations
 	spawnPool->locationList = (spawnLocation_t*)malloc(sizeof(spawnLocation_t) * spawnPool->locationCount);
-	if (!spawnPool->locationList)
-		return;
 	spawnPool->locationList[0].x = jobData->posX;
 	spawnPool->locationList[0].y = jobData->posY;
 	spawnPool->locationList[0].z = jobData->posZ;

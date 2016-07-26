@@ -79,8 +79,6 @@ void cb_DataInterface_Creature_getCreatureTypeList_LootTable(MYSQL *dbCon, diJob
 		job->numLootEntries = 0;
 		job->lootTable = NULL;
 	}
-	if (!job->lootTable)
-		return;
 	sint32 lootIndex = 0;
 	while((dbRow = mysql_fetch_row(dbResult)))
 	{
@@ -257,8 +255,6 @@ void _cb_DataInterface_Creature_getPathNodes(MYSQL *dbCon, diData_path_t* pathDa
 	// allocate path nodes
 	sint32 pathNodeCount = (sint32)mysql_num_rows(dbResult);
 	diData_pathNodes_t *pathNodeList = (diData_pathNodes_t*)malloc(sizeof(diData_pathNodes_t) * pathNodeCount);
-	if (!pathNodeList)
-		return;
 	// parse mysql data
 	diData_pathNodes_t* pathNodeData = pathNodeList;
 	while((dbRow = mysql_fetch_row(dbResult)))
@@ -301,11 +297,9 @@ void cb_DataInterface_Vendor_getVendorList(MYSQL *dbCon, diJob_path_t *job, void
 	// allocate path data
 	sint32 pathCount = (sint32)mysql_num_rows(dbResult);
 	diData_path_t *pathDataList = (diData_path_t*)malloc(sizeof(diData_path_t) * pathCount);
-	if (!pathDataList)
-		return;
 	// parse mysql data
 	diData_path_t* path = pathDataList;
-	while(dbRow = mysql_fetch_row(dbResult))
+	while((dbRow = mysql_fetch_row(dbResult)))
 	{
 		// "pathId,contextId,mode"
 		sint32 path_pathId = 0;

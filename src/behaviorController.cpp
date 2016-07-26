@@ -83,7 +83,7 @@ void controller_setActionFighting(creature_t *creature, uint64 targetEntityId)
 	creature->controller.pathIndex = 0;
 	creature->controller.pathLength = 0;
 	creature->controller.actionFighting.targetEntityId = targetEntityId;
-	creature->lastagression = GetTickCount64();
+	creature->lastagression = GetTickCount();
 }
 
 void controller_setActionPathFollowing(creature_t *creature)
@@ -291,7 +291,7 @@ void controller_creatureThink(mapChannel_t *mapChannel, creature_t *creature, si
 		if(creature->controller.actionWander.state == WANDER_IDLE)
 		{		
 			//--- idle for int time before get new wander position
-			uint32 resttime = GetTickCount64();
+			uint32 resttime = GetTickCount();
 			if( (resttime-creature->lastresttime) > 3500 )
 			{
 				creature->lastresttime = resttime;
@@ -335,7 +335,7 @@ void controller_creatureThink(mapChannel_t *mapChannel, creature_t *creature, si
 					// path could not be generated or too short
 					// leave state and go idle mode
 					creature->controller.actionWander.state = WANDER_IDLE;
-					creature->lastresttime = GetTickCount64() + (rand()%15)*100;
+					creature->lastresttime = GetTickCount() + (rand()%15)*100;
 					return;
 				}
 			}
@@ -439,7 +439,7 @@ void controller_creatureThink(mapChannel_t *mapChannel, creature_t *creature, si
 			return;
 		}
 		// leave combat after 
-		sint32 aggtime = GetTickCount64();
+		sint32 aggtime = GetTickCount();
 		if(aggtime - creature->lastagression > creature->type->aggressionTime)
 		{
 			controller_setActionWander(creature);
@@ -492,7 +492,7 @@ void controller_creatureThink(mapChannel_t *mapChannel, creature_t *creature, si
 			controller_setActionWander(creature);
 			return;
 		}
-		uint32 time = GetTickCount64();
+		uint32 time = GetTickCount();
 		creature->lastagression = time; // update aggression time if we found our target
 		bool needToMove = true;
 		for(sint32 i=0; i<8; i++)

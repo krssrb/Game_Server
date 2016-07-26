@@ -56,8 +56,6 @@ void controller_attachPathsToSpawnpool(spawnPool_t* spawnpool)
 	spawnpool->pathList = (aiPath_t**)malloc(sizeof(aiPath_t*) * numberOfAttachedPaths);
 	// add paths to list
 	numberOfAttachedPaths = 0;
-	if (!spawnpool->pathList)
-		return;
 	for(sint32 i=0; i<aiEnv.numberOfPaths; i++)
 	{
 		if( aiEnv.pathList[i].spawnpool == spawnpool->id )

@@ -27,8 +27,6 @@ void cb_DataInterface_teleporter_getList(MYSQL *dbCon, diJob_teleporterData *job
 	while((dbRow = mysql_fetch_row(dbResult)))
 	{
 		   di_teleporterData *teleporter = teleporterList+x;
-		   if (!teleporter)
-			   return;
 		   x++;
 		   sscanf(dbRow[0], "%d", &teleporter->id);
 		   sscanf(dbRow[1], "%d", &teleporter->type);

@@ -34,9 +34,7 @@ dynObject_t* waypoint_create(mapChannel_t *mapChannel, float x, float y, float z
 	dynObject->stateId = 0;
 	dynamicObject_setPosition(dynObject, x, y, z);
 	// setup waypoint specific data
-	waypoint_t *objData = (waypoint_t*)malloc(sizeof(waypoint_t));
-	if (!objData)
-		return 0;
+	waypoint_t* objData = (waypoint_t*)malloc(sizeof(waypoint_t));
 	memset(objData, 0x00, sizeof(waypoint_t));
 	new(objData) waypoint_t();
 	objData->waypointID = waypointID;

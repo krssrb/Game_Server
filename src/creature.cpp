@@ -14,14 +14,17 @@ void creature_updateAppearance(clientGamemain_t* cgm, uint32 entityId, sint32 we
 creatureType_t* creatureType_createCreatureType(sint32 entityClassId, sint32 nameId)
 {
 	creatureType_t *creatureType = (creatureType_t*)malloc(sizeof(creatureType_t));
-	if (!creatureType)
-		return 0;
 	memset(creatureType, 0, sizeof(creatureType_t));
 	creatureType->entityClassId = entityClassId;
 	creatureType->nameId = nameId;
 	// set some default settings
 	creatureType->maxHealth = 100;
 	return creatureType;
+}
+
+/* ToDo */
+void creatureType_registerCreatureType(creatureType_t * creatureType, sint8 * name)
+{
 }
 
 creatureType_t* creatureType_findType(sint32 typeId)
@@ -54,8 +57,6 @@ creature_t* creature_createCreature(mapChannel_t *mapChannel, creatureType_t *cr
 {
 	// allocate and init creature
 	creature_t *creature = (creature_t*)malloc(sizeof(creature_t));
-	if (!creature)
-		return 0;
 	memset(creature, 0, sizeof(creature_t));
 	creature->type = creatureType; // direct pointer for fast access to type info
 	creature->actor.entityClassId = creatureType->entityClassId;
@@ -143,8 +144,8 @@ void creature_setLocation(creature_t *creature, float x, float y, float z, float
 	//allocate pathnodes
 	creature->pathnodes = (baseBehavior_baseNode*) malloc(sizeof(baseBehavior_baseNode));
 	memset(creature->pathnodes, 0x00, sizeof(baseBehavior_baseNode));
-	creature->lastattack = GetTickCount64();
-	creature->lastresttime = GetTickCount64();
+	creature->lastattack = GetTickCount();
+	creature->lastresttime = GetTickCount();
 }
 
 /* update function*/
@@ -564,8 +565,6 @@ void creature_cellUpdateLocation(mapChannel_t *mapChannel, creature_t* creature,
 void _creature_dbCreatureMissile_cb(void *param, diJob_creatureAction_t *jobData)
 {
 	creatureMissile_t* creatureMissile = (creatureMissile_t*)malloc(sizeof(creatureMissile_t));
-	if (!creatureMissile)
-		return;
 	memset(creatureMissile, 0x00, sizeof(creatureMissile_t));
 	// copy values
 	creatureMissile->id = jobData->id;
@@ -586,8 +585,6 @@ void _creature_dbCreatureType_cb(void *param, diJob_creatureType_t *jobData)
 {
 	printf("Load creature type '%s'\n", jobData->name);
 	creatureType_t *creatureType = (creatureType_t*)malloc(sizeof(creatureType_t));
-	if (!creatureType)
-		return;
 	memset(creatureType, 0, sizeof(creatureType_t));
 	creatureType->typeId = jobData->id;
 	creatureType->entityClassId = jobData->classId;
@@ -624,8 +621,6 @@ void _creature_dbCreatureType_cb(void *param, diJob_creatureType_t *jobData)
 	if( creatureType->lootTableSize > 0 )
 	{
 		creatureType->lootTable = (creatureTypeLoot_t*)malloc(sizeof(creatureTypeLoot_t) * creatureType->lootTableSize);
-		if (!creatureType->lootTable)
-			return;
 		memset(creatureType->lootTable, 0x00, sizeof(creatureTypeLoot_t) * creatureType->lootTableSize);
 		for(sint32 f=0; f<creatureType->lootTableSize; f++)
 		{
